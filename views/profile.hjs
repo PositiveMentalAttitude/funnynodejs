@@ -1,0 +1,23 @@
+<script src = "/javascripts/test.js"></script>
+YOU MADE IT <br>
++<br>
++<br>
++<br>
++<br>
+<strong>ID: </strong>{{user._id}} <br>
+<strong>Email: </strong>{{user.local.email}} <br>
+<strong>Password: </strong>{{user.local.password}} 
+<br>
+<button onclick = "logout()"><strong>LOGOUT</strong></button>
+<br>
+<br>
+<br>
+=================================================================================
+<br>
+<br>
+<br>
+<h1>FACEBOOK</h1>
+<br>
+<strong>ID: </strong>{{user.facebook.id}} <br>
+<strong>Token: </strong>{{user.facebook.token}} <br>
+<strong>Name: </strong>{{user.facebook.name}}

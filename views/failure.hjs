@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FAILURE</title>
+    </script>
+  </head>
+  <body>
+    <h1>FAILURE - {{message}}</h1>
+  </body>
+</html>

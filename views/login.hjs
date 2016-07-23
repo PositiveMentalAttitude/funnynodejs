@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LOCAL LOGIN</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    </script>
+  </head>
+  <body>
+    <h1>LOGIN WINDOW</h1>
+    <form action = "/login" method = "post">
+    <input id = "user-name" type="email" placeholder = "User Name" name = "email" required = true></input>
+    <br/>
+    <input id = "password" type="password" placeholder = "Password" name = "password"></input>
+    <input type="submit"><strong>SEND</strong></input>
+    </form>
+    <text id = "display-res-text">{{message}}</text>
+  </body>
+</html>
