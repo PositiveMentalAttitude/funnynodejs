@@ -8,40 +8,14 @@
     <script src = "/javascripts/test.js">
     </script>
     <script type = "text/javascript">
-      var Facebook;
-
-      window["fbAsyncInit"] = () => {
-      Facebook = window["FB"];
-
-      Facebook.init({
-          appId: '168223493590513',
-          cookie: true,  // enable cookies to allow the server to access 
-          // the session
-          xfbml: true,  // parse social plugins on this page
-          version: 'v2.7' // use graph api version 2.5
-      });
-      }
-      (function (d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) return;
-          js = d.createElement(s); js.id = id;
-          js.src = "//connect.facebook.net/en_US/sdk.js";
-          fjs.parentNode.insertBefore(js, fjs);
-      } (document, 'script', 'facebook-jssdk'));
-    function handleLoginFacebook() {
-      Facebook.login((response) => {
-        console.log(response);
-      },{scope : 'public_profile,email'});
-    }
+     
     </script>
   </head>
   <body>
     <button onclick = "moveToLocalLogin()"><strong>LOCAL LOGIN</strong></button>
     <button onclick = "moveToLocalSignup()"><strong>LOCAL SIGNUP</strong></button>
     <br>
-    <button onclick = "handleLoginFacebook()"><strong>LOGIN WITH FACEBOOK</strong></button>
-    <a href = "/auth/facebook"><strong>LOGIN WITH FACEBOOK - PASSPORT</strong></a>
-    <button><strong>LOGIN WITH GOOGLE</strong></button>
-
+    <a href = "/auth/facebook"><strong>LOGIN WITH FACEBOOK - PASSPORT</strong></a> <br>
+    <a href = "/auth/google"><strong>LOGIN WITH GOOGLE - PASSPORT</strong></a>
   </body>
 </html>

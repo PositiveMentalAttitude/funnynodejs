@@ -1,9 +1,10 @@
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 var User = require('./userSchema');
 
-var configAuth = require('./authFacebook');
+var configAuth = require('./auth');
 
 module.exports = (passport) => {
 
@@ -89,6 +90,7 @@ module.exports = (passport) => {
         clientID : configAuth.facebookAuth.clientID,
         clientSecret: configAuth.facebookAuth.clientSecret,
         callbackURL: configAuth.facebookAuth.callbackURL,
+        profileFields: ['id', 'displayName', 'link', 'photos', 'emails']
     }, (accessToken, refreshToken, profile, done) => {
         process.nextTick(() => {
             User.findOne({'facebook.id': profile.id}, (err,user) => {
@@ -105,15 +107,51 @@ module.exports = (passport) => {
                     newUser.facebook.id = profile.id;
                     newUser.facebook.token = accessToken;
                     newUser.facebook.name = profile.displayName;
-                    // SUMTING WONG CANT GET THE SHITTY EMAIL WTF???
-                    // newUser.facebook.email = profile.emails[0].value;
+                    newUser.facebook.email = profile.emails[0].value;
 
                     newUser.save((err) => {
                         if (err) {
                             throw err;
                         }
                         return done(null,newUser);
-                    });  
+                    });
+                    console.log(profile);
+                }
+            });
+        });
+    }));
+
+    //Login with google strategy
+
+    passport.use(new GoogleStrategy({
+        clientID : configAuth.googleAuth.clientID,
+        clientSecret: configAuth.googleAuth.clientSecret,
+        callbackURL: configAuth.googleAuth.callbackURL
+    }, (accessToken, refreshToken, profile, done) => {
+        process.nextTick(() => {
+            User.findOne({'google.id': profile.id}, (err,user) => {
+                if (err) {
+                    //return if it has any error
+                    return done(err);
+                }
+                if (user) {
+                    //return err = null and user
+                    return done(null,user);
+                } else {
+                    //create a new User if no match found
+                    var newUser = new User();
+                    newUser.google.id = profile.id;
+                    newUser.google.token = accessToken;
+                    newUser.google.name = profile.displayName;
+                    newUser.google.email = profile.emails[0].value;
+
+                    newUser.save((err) => {
+                        if (err) {
+                            throw err;
+                        }
+                        return done(null,newUser);
+                    });
+                    console.log(profile);
                 }
             });
         });

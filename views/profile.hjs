@@ -20,4 +20,15 @@ YOU MADE IT <br>
 <br>
 <strong>ID: </strong>{{user.facebook.id}} <br>
 <strong>Token: </strong>{{user.facebook.token}} <br>
-<strong>Name: </strong>{{user.facebook.name}}
+<strong>Name: </strong>{{user.facebook.name}} <br>
+<strong>Email: </strong>{{user.facebook.email}} <br>
+=================================================================================
+<br>
+<br>
+<br>
+<h1>GOOGLE</h1>
+<br>
+<strong>ID: </strong>{{user.google.id}} <br>
+<strong>Token: </strong>{{user.google.token}} <br>
+<strong>Name: </strong>{{user.google.name}} <br>
+<strong>Email: </strong>{{user.google.email}}
