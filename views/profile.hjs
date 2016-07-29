@@ -1,14 +1,20 @@
 <script src = "/javascripts/test.js"></script>
+
 YOU MADE IT <br>
 +<br>
 +<br>
 +<br>
 +<br>
-<strong>ID: </strong>{{user._id}} <br>
-<strong>Email: </strong>{{user.local.email}} <br>
-<strong>Password: </strong>{{user.local.password}} 
-<br>
-<button onclick = "logout()"><strong>LOGOUT</strong></button>
+{{#user.local.email}}
+<strong>ID: </strong>{{user._id}}<br>
+<strong>Email: </strong>{{user.local.email}}<br>
+<strong>Password: </strong>{{user.local.password}}<br>
+<button onclick = "logout()"><strong>LOGOUT</strong></button><br>
+<a href = "/unlink/local">Unlink Local Account<a/>
+{{/user.local.email}}
+{{^user.local.email}}
+<a href = "/connect/local">Connect Local Account<a/>
+{{/user.local.email}}
 <br>
 <br>
 <br>
@@ -18,17 +24,37 @@ YOU MADE IT <br>
 <br>
 <h1>FACEBOOK</h1>
 <br>
+{{#user.facebook.token}}
 <strong>ID: </strong>{{user.facebook.id}} <br>
 <strong>Token: </strong>{{user.facebook.token}} <br>
 <strong>Name: </strong>{{user.facebook.name}} <br>
 <strong>Email: </strong>{{user.facebook.email}} <br>
+<a href = "/unlink/facebook">Unlink Facebook Account</a>
+{{/user.facebook.token}}
+{{^user.facebook.token}}
+<a href = "/connect/facebook">Connect Facebook Account</a>
+{{/user.facebook.token}}
 =================================================================================
 <br>
 <br>
 <br>
 <h1>GOOGLE</h1>
 <br>
+{{#user.google.token}}
 <strong>ID: </strong>{{user.google.id}} <br>
 <strong>Token: </strong>{{user.google.token}} <br>
 <strong>Name: </strong>{{user.google.name}} <br>
-<strong>Email: </strong>{{user.google.email}}
+<strong>Email: </strong>{{user.google.email}} <br>
+<a href = "/unlink/google">Unlink Google Account</a>
+{{/user.google.token}}
+{{^user.google.token}}
+<a href = "/connect/google">Connect Google Account</a>
+{{/user.google.token}} <br>
+=================================================================================
+<br>
+{{#user.token.value}}
+<h4>Token: {{user.token.value}}</h4>
+{{/user.token.value}}
+{{^user.token.value}}
+<a href = "/getToken">Get Token</a><br>
+{{/user.token.value}}

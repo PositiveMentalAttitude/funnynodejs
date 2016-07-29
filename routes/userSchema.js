@@ -2,6 +2,8 @@
 
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
+var Schema = mongoose.Schema;
+var RandToken = require('rand-token');
 
 var userSchema = mongoose.Schema({
     local: {
@@ -21,8 +23,50 @@ var userSchema = mongoose.Schema({
         token: String,
         email: String,
         name: String
+    },
+
+    token: {
+        type: Schema.Types.ObjectId,
+        //Reference to tokenSchema (read more document)
+        ref: 'Token',
+        default: null
     }
 });
+
+var tokenSchema = mongoose.Schema({
+    value: String,
+    user: {
+        //Reference to an user
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    expireAt: {
+        type: Date,
+        //set the expired time of token to 5 mins
+        expires: 60*5,
+        default: Date.now()
+    }
+});
+
+//When user call this method, they will generate a Token
+userSchema.methods.generateToken = function () {
+    var token = new Token();
+
+    token.value = RandToken.generate(32);
+    //reference this token to user
+    token.user = this._id;
+    //reference user to this token
+    this.token = token._id;
+
+    this.save((err) => {
+        if (err)
+            throw err;
+        token.save((err) => {
+            if (err)
+                throw err;
+        });
+    });
+};
 
 userSchema.methods.generateHash = (password) => {
     //genSaltSync has the default salt round is 10
@@ -39,4 +83,9 @@ userSchema.methods.validPassword = function (password) {
     return bcrypt.compareSync(password, this.local.password);
 }
 
-module.exports = mongoose.model('User',userSchema);
+var User = mongoose.model('User', userSchema);
+var Token = mongoose.model('Token', tokenSchema);
+
+var Models = { User: User, Token: Token };
+
+module.exports = Models;
