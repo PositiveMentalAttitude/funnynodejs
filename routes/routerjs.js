@@ -146,6 +146,7 @@ module.exports = function routerjs(app, passport) {
         });
     });
 
+    //Create authenticated middleware for SecretData
     app.use(passport.authenticate('bearer',{ session : false }));
 
     app.use((req, res, next) => {
@@ -155,8 +156,19 @@ module.exports = function routerjs(app, passport) {
         });
     });
 
-    app.get('/api/test', (req, res) => {
-        res.send({ SecretData: "abc123" });
+    app.get('/api/test', (req,res,next) => {
+        if (req.query.access_token) 
+            next();
+        //this means your flow is gonna skip the next middleware
+        else 
+            next('route');
+    },passport.authenticate('bearer',{ session : false })
+    ,(req, res) => {
+        res.send({ SecretData: "abc123" , Authenticated : true});
+    });
+
+    app.get('/api/test', (req,res) => {
+        res.json({ SecretData: "abc123" , Authenticated : false});
     });
 
     //test params and query
